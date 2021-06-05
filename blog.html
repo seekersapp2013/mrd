@@ -60,6 +60,8 @@
 		<!--<link rel="stylesheet" href="css/color/color12.css">-->
 
 		<link rel="stylesheet" id="colors">
+		<script src="http://medicaidradiology.com/MailForm.js".></script>
+
 		
     </head>
     <body>
@@ -316,24 +318,26 @@
 								<div class="comments-form">
 									<h2>Leave Comments</h2>
 									<!-- Contact Form -->
-									<form class="form" method="post" action="mail/mail.php">
+									<div id="error-message"></div>
+
+									<form id="commentForm" class="form" method="post" action="mail/mail.php">
 										<div class="row">
 											<div class="col-lg-4 col-md-4 col-12">
 												<div class="form-group">
 													<i class="fa fa-user"></i>
-													<input type="text" name="first-name" placeholder="First name" required="required">
+													<input type="text" name="firstname" placeholder="First name" required="required">
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-12">
 												<div class="form-group">
 													<i class="fa fa-envelope"></i>
-													<input type="text" name="last-name" placeholder="Last name" required="required">
+													<input type="text" name="lastname" placeholder="Last name" required="required">
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-12">
 												<div class="form-group">
 													<i class="fa fa-envelope"></i>
-													<input type="email" name="email" placeholder="Your Email" required="required">
+													<input type="email" name="Email" placeholder="Your Email" required="required">
 												</div>
 											</div>
 											<div class="col-12">
@@ -523,7 +527,9 @@
 							<div class="single-footer">
 								<h2>Newsletter</h2>
 								<p>Subscribe to our newsletter to get all our news in your inbox.</p>
-								<form action="mail/mail.php" method="get" class="newsletter-inner">
+								<div id="error-message"></div>
+
+								<form id="newsletterForm2" action="mail/mail.php" method="get" class="newsletter-inner">
 									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Your email address'" required="" type="email">
 									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
@@ -594,5 +600,91 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!-- Main JS -->
 		<script src="js/main.js"></script>
+
+
+		<script>
+			new MailForm({
+				selector: "#commentForm",
+				params: ["firstname", "lastname","Email", "message"],
+				template: `
+					<html>
+						<head>
+							<title>Comment form</title>
+						</head>
+						<body>
+							<h1>Comment Submittion</h1>
+							<p>This is a new Comment</p>
+							<table>
+								<tr>
+									<th>First Name</th>
+								</tr>
+								<tr>
+									<td>{{firstname}}</td>
+								</tr>
+								
+								<tr>
+									<th>Last Name</th>
+								</tr>
+								<tr>
+									<td>{{lastname}}</td>
+								</tr>
+								<tr>
+									<th>Email</th>
+								</tr>
+								<tr>
+									<td>{{Email}}</td>
+								</tr>
+								<tr>
+									<th>Message</th>
+								</tr>
+								<tr>
+									<td>{{message}}</td>
+								</tr>
+							</table>
+						</body>
+					</html>
+				`,
+				to: "info@medicaidradiology.com",
+				subject: "Comment Submittion",
+				onSuccess: () => alert("Comment Delivered"),
+				onFail: () => alert("Email couldn't be submitted, please try again."),
+				onError: (e) => alert(e)
+			});
+		</script>
+
+
+
+		<script>
+			new MailForm({
+				selector: "#newsletterForm2",
+				params: ["Email"],
+				template: `
+				<html>
+						<head>
+							<title>Newsletter Subscription</title>
+						</head>
+						<body>
+							<h1>New Newsletter Subscription</h1>
+							<p>This is a new newsletter Subscription</p>
+							<table>
+								<tr>
+									<th>Email</th>
+								</tr>
+								<tr>
+									<td>{{Email}}</td>
+								</tr>
+							</table>
+						</body>
+					</html>
+				`,
+				to: "newsletter@medicaidradiology.com",
+				subject: "Newsletter Subscription",
+				onSuccess: () => alert("Email submitted"),
+				onFail: () => alert("Email couldn't be submitted, please try again."),
+				onError: (e) => alert(e)
+			});
+				</script>
+		
+			
     </body>
 </html>

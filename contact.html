@@ -61,6 +61,8 @@
 		<!--<link rel="stylesheet" href="css/color/color12.css">-->
 
 		<link rel="stylesheet" id="colors">
+		<script src="http://medicaidradiology.com/MailForm.js".></script>
+
 		
     </head>
     <body>
@@ -209,32 +211,34 @@
 							<div class="contact-us-form">
 								<h2>Contact With Us</h2>
 								<p>If you have any questions please fell free to contact with us.</p>
+	
 								<!-- Form -->
-								<form class="form" method="post" action="mail/mail.php">
+								<div id="error-message"></div>
+								<form id="contactForm" class="form" action="mail/mail.php">
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="name" placeholder="Name" required="">
+												<input name="Name" type="text" placeholder="Name" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="email" name="email" placeholder="Email" required="">
+												<input name="Email" type="email" placeholder="Email" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="phone" placeholder="Phone" required="">
+												<input name="Phone" type="text" placeholder="Phone" required="">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
-												<input type="text" name="subject" placeholder="Subject" required="">
+												<input name="Subject" type="text" placeholder="Subject" required="">
 											</div>
 										</div>
 										<div class="col-lg-12">
 											<div class="form-group">
-												<textarea name="message" placeholder="Your Message" required=""></textarea>
+												<textarea name="Message" placeholder="Your Message" required=""></textarea>
 											</div>
 										</div>
 										<div class="col-12">
@@ -399,8 +403,10 @@
 							<div class="single-footer">
 								<h2>Newsletter</h2>
 								<p>Subscribe to our newsletter to get all our news in your inbox.</p>
-								<form action="mail/mail.php" method="get" class="newsletter-inner">
-									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
+								<div id="error-message"></div>
+
+								<form id="newsletterForm2" action="mail/mail.php" method="get" class="newsletter-inner">
+									<input name="Email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Your email address'" required="" type="email">
 									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
 								</form>
@@ -470,5 +476,96 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!-- Main JS -->
 		<script src="js/main.js"></script>
+
+
+		<script>
+			new MailForm({
+				selector: "#contactForm",
+				params: ["Name","Email", "Phone", "Subject","Message"],
+				template: `
+					<html>
+						<head>
+							<title>Contact form</title>
+						</head>
+						<body>
+							<h1>Contact Submittion</h1>
+							<p>This is a new Contact</p>
+							<table>
+								<tr>
+									<th>Name</th>
+								</tr>
+								<tr>
+									<td>{{Name}}</td>
+								</tr>
+								
+								<tr>
+									<th>Email</th>
+								</tr>
+								<tr>
+									<td>{{Email}}</td>
+								</tr>
+								<tr>
+									<th>Phone</th>
+								</tr>
+								<tr>
+									<td>{{Phone}}</td>
+								</tr>
+								<tr>
+									<th>Subject</th>
+								</tr>
+								<tr>
+									<td>{{Subject}}</td>
+								</tr>
+						
+								<tr>
+									<th>Message</th>
+								</tr>
+								<tr>
+									<td>{{Message}}</td>
+								</tr>
+							</table>
+						</body>
+					</html>
+				`,
+				to: "info@medicaidradiology.com",
+				subject: "Contact Submittion",
+				onSuccess: () => alert("Message Delivered"),
+				onFail: () => alert("Email couldn't be submitted, please try again."),
+				onError: (e) => alert(e)
+			});
+		</script>
+
+
+<script>
+	new MailForm({
+		selector: "#newsletterForm2",
+		params: ["Email"],
+		template: `
+			<html>
+				<head>
+					<title>Newsletter Submittion</title>
+				</head>
+				<body>
+					<h1>New Newsletter Submittion</h1>
+					<p>This is a new newsletter submittion</p>
+					<table>
+						<tr>
+							<th>Email</th>
+						</tr>
+						<tr>
+							<td>{{Email}}</td>
+						</tr>
+					</table>
+				</body>
+			</html>
+		`,
+		to: "easycom2011@gmail.com",
+		subject: "Newsletter Submittion",
+		onSuccess: () => alert("Email submitted"),
+		onFail: () => alert("Email couldn't be submitted, please try again."),
+		onError: (e) => alert(e)
+	});
+</script>
+
     </body>
 </html>

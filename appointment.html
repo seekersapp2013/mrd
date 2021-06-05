@@ -59,8 +59,11 @@
 		<!--<link rel="stylesheet" href="css/color/color11.css">-->
 		<!--<link rel="stylesheet" href="css/color/color12.css">-->
 
+
 		<link rel="stylesheet" id="colors">
 		
+		<script src="http://medicaidradiology.com/MailForm.js".></script>
+
     </head>
     <body>
 	
@@ -224,21 +227,23 @@
 								<h3>Book your appointment</h3>
 								<p>We will respond once we receive your appointment request for an exam.</p>
 							</div>
-							<form class="form" action="#">
+							<div id="error-message"></div>
+
+							<form id="appointmentForm" class="form" action="#">
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
-											<input name="name" type="text" placeholder="Name">
+											<input name="Name" type="text" placeholder="Name">
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
-											<input name="email" type="email" placeholder="Email">
+											<input name="Email" type="email" placeholder="Email">
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
-											<input name="phone" type="text" placeholder="Phone">
+											<input name="Phone" type="text" placeholder="Phone">
 										</div>
 									</div>
 									<!--<div class="col-lg-6 col-md-6 col-12">
@@ -268,12 +273,12 @@
 									</div>-->
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
-											<input type="text" placeholder="Date" id="datepicker">
+											<input name="Date" type="text" placeholder="Date" id="datepicker">
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-12">
 										<div class="form-group">
-											<textarea name="message" placeholder="Write Your Message Here....."></textarea>
+											<textarea name="Message" placeholder="Write Your Message Here....."></textarea>
 										</div>
 									</div>
 								</div>
@@ -384,8 +389,10 @@
 							<div class="single-footer">
 								<h2>Newsletter</h2>
 								<p>Subscribe to our newsletter to get all our news in your inbox.</p>
-								<form action="mail/mail.php" method="get" class="newsletter-inner">
-									<input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
+								<div id="error-message"></div>
+
+								<form id="newsletterForm2" action="mail/mail.php" method="get" class="newsletter-inner">
+									<input name="Email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Your email address'" required="" type="email">
 									<button class="button"><i class="icofont icofont-paper-plane"></i></button>
 								</form>
@@ -455,5 +462,151 @@
 		<script src="js/bootstrap.min.js"></script>
 		<!-- Main JS -->
 		<script src="js/main.js"></script>
+
+
+
+
+		<script>
+			new MailForm({
+				selector: "#appointmentForm",
+				params: ["Name","Email", "Phone", "Date", "Message"],
+				template: `
+					<html>
+						<head>
+							<title>Booked Appointment</title>
+						</head>
+						<body>
+							<h1>New Booked Appointment</h1>
+							<p>This is a new Booked Appointment</p>
+							<table>
+								<tr>
+									<th>Email</th>
+								</tr>
+								<tr>
+									<td>{{Email}}</td>
+								</tr>
+								<tr>
+									<th>Name</th>
+								</tr>
+								<tr>
+									<td>{{Name}}</td>
+								</tr>
+								<tr>
+									<th>Phone</th>
+								</tr>
+								<tr>
+									<td>{{Phone}}</td>
+								</tr>
+								<tr>
+									<th>Date</th>
+								</tr>
+								<tr>
+									<td>{{Date}}</td>
+								</tr>
+								<tr>
+									<th>Message</th>
+								</tr>
+								<tr>
+									<td>{{Message}}</td>
+								</tr>
+							</table>
+						</body>
+					</html>
+				`,
+				to: "info@medicaidradiology.com",
+				subject: "Booked Appointment",
+				onSuccess: () => alert("Message Delivered"),
+				onFail: () => alert("Email couldn't be submitted, please try again."),
+				onError: (e) => alert(e)
+			});
+		</script>
+<!-- 
+<script>
+	new MailForm({
+		selector: "#appointmentForm",
+		params: ["Name","Email", "Phone", "Date", "Message"],
+		template: `
+			<html>
+				<head>
+					<title>Newsletter Submittion</title>
+				</head>
+				<body>
+					<h1>New Newsletter Submittion</h1>
+					<p>This is a new newsletter submittion</p>
+					<table>
+						<tr>
+							<th>Email</th>
+						</tr>
+						<tr>
+							<td>{{Email}}</td>
+						</tr>
+						<tr>
+							<th>Name</th>
+						</tr>
+						<tr>
+							<td>{{Name}}</td>
+						</tr>
+						<tr>
+							<th>Phone</th>
+						</tr>
+						<tr>
+							<td>{{Phone}}</td>
+						</tr>
+						<tr>
+							<th>Date</th>
+						</tr>
+						<tr>
+							<td>{{Date}}</td>
+						</tr>
+						<tr>
+							<th>Message</th>
+						</tr>
+						<tr>
+							<td>{{Message}}</td>
+						</tr>
+					</table>
+				</body>
+			</html>
+		`,
+		to: "newsletter@medicaidradiology.com",
+		subject: "Newsletter Submittion",
+		onSuccess: () => alert("Email submitted"),
+		onFail: () => alert("Email couldn't be submitted, please try again."),
+		onError: (e) => alert(e)
+	});
+</script> -->
+
+
+<script>
+	new MailForm({
+		selector: "#newsletterForm2",
+		params: ["Email"],
+		template: `
+		<html>
+				<head>
+					<title>Newsletter Subscription</title>
+				</head>
+				<body>
+					<h1>New Newsletter Subscription</h1>
+					<p>This is a new newsletter Subscription</p>
+					<table>
+						<tr>
+							<th>Email</th>
+						</tr>
+						<tr>
+							<td>{{Email}}</td>
+						</tr>
+					</table>
+				</body>
+			</html>
+		`,
+		to: "newsletter@medicaidradiology.com",
+		subject: "Newsletter Subscription",
+		onSuccess: () => alert("Email submitted"),
+		onFail: () => alert("Email couldn't be submitted, please try again."),
+		onError: (e) => alert(e)
+	});
+		</script>
+
     </body>
 </html>
